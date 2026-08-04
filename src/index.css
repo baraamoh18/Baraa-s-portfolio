@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", "Noto Kufi Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Noto Kufi Arabic", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --background: 240 10% 4%;
+  --foreground: 0 0% 97%;
+
+  --card: 240 9% 8%;
+  --card-foreground: 0 0% 96%;
+
+  --popover: 240 9% 7%;
+  --popover-foreground: 0 0% 97%;
+
+  --primary: 0 0% 98%;
+  --primary-foreground: 240 10% 6%;
+
+  --secondary: 240 6% 15%;
+  --secondary-foreground: 0 0% 92%;
+
+  --muted: 240 6% 13%;
+  --muted-foreground: 240 5% 64%;
+
+  --accent: 240 6% 18%;
+  --accent-foreground: 0 0% 98%;
+
+  --destructive: 0 63% 51%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 240 6% 18%;
+  --input: 240 6% 18%;
+  --ring: 0 0% 80%;
+
+  --surface: 240 9% 9%;
+  --surface-foreground: 0 0% 95%;
+
+  --radius: 0.9rem;
+}
+
+* {
+  @apply border-border;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+section[id] {
+  scroll-margin-top: 6rem;
+}
+
+body {
+  @apply bg-background text-foreground font-sans;
+  font-feature-settings: "ss01", "ss02", "cv01";
+  overflow-x: hidden;
+}
+
+html[dir="rtl"] body {
+  font-family: var(--font-arabic);
+}
+
+::selection {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
+}
+
+/* Slim, unobtrusive scrollbar to match the premium aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: hsl(240 6% 22%);
+  border-radius: 999px;
+  border: 2px solid hsl(var(--background));
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(240 6% 30%);
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #a6a6ac 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-silver {
+    background: linear-gradient(90deg, #fafafa 0%, #9a9aa2 50%, #fafafa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
