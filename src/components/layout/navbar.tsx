@@ -1,7 +1,7 @@
 import { useState, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/ui/logo";
+import { LogoMark } from "@/components/ui/logo-mark";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import {
   MobileNavHeader,
@@ -39,8 +39,8 @@ export const Navbar = () => {
   return (
     <ResizableNavbar>
       <NavBody>
-        <a href="#home" onClick={handleLogoClick} className="flex items-center gap-2">
-          <Logo className="h-6 w-auto text-foreground" />
+        <a href="#home" onClick={handleLogoClick} className="flex items-center group">
+          <LogoMark className="h-10 w-10 text-foreground transition-transform duration-200 group-hover:scale-110" />
         </a>
         <NavItems items={navItems} onItemClick={scrollToSection} />
         <div className="flex items-center gap-3">
@@ -53,8 +53,8 @@ export const Navbar = () => {
 
       <div className="px-4 pt-4">
         <MobileNavHeader>
-          <a href="#home" onClick={handleLogoClick} className="flex items-center gap-2">
-            <Logo className="h-5 w-auto text-foreground" />
+          <a href="#home" onClick={handleLogoClick} className="flex items-center group">
+            <LogoMark className="h-9 w-9 text-foreground transition-transform duration-200 group-hover:scale-110" />
           </a>
           <div className="flex items-center gap-2">
             <LanguageSwitcher />

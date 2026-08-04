@@ -52,7 +52,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-6xl"
+            className="font-display text-4xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-5xl md:text-6xl overflow-visible"
           >
             {t("hero.titlePrefix")}{" "}
             <br className="hidden sm:block" />
@@ -103,6 +103,7 @@ export const HeroSection = () => {
           <GlowingAvatar
             src="/images/headshot.jpeg"
             alt={t("hero.greeting")}
+            href="https://www.linkedin.com/in/albaraa-mohamed-830498284/"
             className="h-[26rem] sm:h-[32rem]"
           />
         </motion.div>

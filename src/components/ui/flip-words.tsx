@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -9,81 +9,47 @@ export interface FlipWordsProps {
 }
 
 /**
- * Cycles through a list of words with a staggered letter-in / blur-out
- * transition, in the spirit of Aceternity UI's Flip Words component.
+ * Cycles through a list of words with a smooth blur/slide transition.
+ * Gradient is applied via inline style on the outer motion.span so that
+ * background-clip:text is never broken by framer's color interpolation.
  */
 export const FlipWords = ({
   words,
-  duration = 2600,
+  duration = 3000,
   className,
 }: FlipWordsProps) => {
   const [index, setIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  const startAnimation = useCallback(() => {
-    setIsAnimating(true);
-  }, []);
 
   useEffect(() => {
-    if (isAnimating || words.length < 2) return;
-    const timeout = setTimeout(startAnimation, duration);
-    return () => clearTimeout(timeout);
-  }, [isAnimating, duration, startAnimation, words.length]);
+    if (!words || words.length < 2) return;
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, duration);
+    return () => clearInterval(interval);
+  }, [words, duration]);
 
-  const currentWord = words[index % words.length] ?? "";
+  if (!words || words.length === 0) return null;
+
+  const currentWord = words[index] ?? "";
 
   return (
-    <AnimatePresence
-      mode="wait"
-      onExitComplete={() => {
-        setIndex((prev) => (prev + 1) % words.length);
-        setIsAnimating(false);
-      }}
-    >
+    <AnimatePresence mode="wait">
       <motion.span
-        key={currentWord}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 120, damping: 14 }}
-        exit={{
-          opacity: 0,
-          y: -32,
-          x: 8,
-          filter: "blur(10px)",
-          scale: 1.05,
-          position: "absolute",
+        key={currentWord + index}
+        initial={{ opacity: 0, y: 20, filter: "blur(12px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        exit={{ opacity: 0, y: -20, filter: "blur(12px)" }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className={cn("inline-block whitespace-nowrap", className)}
+        style={{
+          background: "linear-gradient(180deg, #ffffff 0%, #a6a6ac 100%)",
+          WebkitBackgroundClip: "text",
+          backgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          color: "transparent",
         }}
-        className={cn("inline-block whitespace-nowrap text-gradient", className)}
       >
-        {currentWord.split(" ").map((word, wordIndex) => (
-          <motion.span
-            key={word + wordIndex}
-            initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{
-              delay: wordIndex * 0.08,
-              duration: 0.35,
-              ease: "easeOut",
-            }}
-            className="inline-block whitespace-nowrap"
-          >
-            {word.split("").map((letter, letterIndex) => (
-              <motion.span
-                key={word + letterIndex}
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: wordIndex * 0.08 + letterIndex * 0.025,
-                  duration: 0.25,
-                }}
-                className="inline-block"
-              >
-                {letter}
-              </motion.span>
-            ))}
-            <span className="inline-block">&nbsp;</span>
-          </motion.span>
-        ))}
+        {currentWord}
       </motion.span>
     </AnimatePresence>
   );
