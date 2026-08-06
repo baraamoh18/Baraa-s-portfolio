@@ -1,15 +1,13 @@
-import { Code2, Database, Palette, Wrench } from "lucide-react";
+import { Code2, Database, Globe, Palette, Server, Wrench } from "lucide-react";
 import {
-  SiDocker,
   SiFigma,
   SiFramer,
   SiGit,
-  SiGraphql,
   SiJavascript,
   SiJest,
   SiNextdotjs,
-  SiNodedotjs,
   SiReact,
+  SiReactquery,
   SiRedux,
   SiSass,
   SiStorybook,
@@ -58,10 +56,10 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     icon: Database,
     className: "sm:col-span-1 lg:col-span-1",
     items: [
-      { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
-      { name: "GraphQL", icon: SiGraphql, color: "#E10098" },
+      { name: "Xano", icon: Server, color: "#6C47FF" },
       { name: "Redux", icon: SiRedux, color: "#764ABC" },
-      { name: "Docker", icon: SiDocker, color: "#2496ED" },
+      { name: "React Query", icon: SiReactquery, color: "#FF4154" },
+      { name: "REST APIs", icon: Globe, color: "#38BDF8" },
     ],
   },
 ];

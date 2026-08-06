@@ -45,8 +45,8 @@
         "description": "Fast, reliable pipelines from local dev to production deploys."
       },
       "backend": {
-        "title": "Backend & Data",
-        "description": "Connecting interfaces to robust data layers and APIs."
+        "title": "API & State Management",
+        "description": "Managing complex application state and seamlessly integrating headless APIs."
       }
     }
   },
@@ -62,29 +62,23 @@
     "viewLive": "View Live",
     "viewCode": "View Code",
     "items": {
-      "aurora-finance": {
-        "title": "Aurora Finance",
-        "description": "A real-time investment dashboard that turns dense market data into calm, legible decisions for private wealth clients.",
-        "challenge": "Clients were drowning in dense tables and lagging charts, making it hard to react to market moves with confidence in the moments that mattered most.",
-        "solution": "I rebuilt the data layer around streaming updates and virtualization, then designed a monochrome, chart-first interface with motion cues that highlight what changed \u2014 cutting time-to-insight dramatically."
+      "trosc": {
+        "title": "TROSC Website",
+        "description": "The official platform for TROSC — a student-led tech community at the Faculty of Computers and Information — built to guide learners through structured tracks in Frontend, Backend, Mobile, AI, and more.",
+        "challenge": "The community needed a central hub where students could discover available tracks, explore upcoming events, and connect with the team — all in one cohesive, branded experience that reflected TROSC's energy.",
+        "solution": "I designed and built a clean, multi-page website with a home section that communicates TROSC's identity immediately, a tracks directory, and an events listing — making it easy for new students to find their learning path and feel part of the family."
       },
-      "nimbus-console": {
-        "title": "Nimbus Console",
-        "description": "A multi-tenant SaaS admin console for managing cloud infrastructure across teams, regions, and environments.",
-        "challenge": "Engineering teams needed a single console to manage infrastructure across dozens of regions without losing track of environment-specific risk.",
-        "solution": "I introduced a resizable, context-aware navigation system and a permissions-aware Bento layout so teams see exactly what matters to their role \u2014 nothing more, nothing less."
+      "tijara": {
+        "title": "TIJARA Dashboard",
+        "description": "A full-featured Arabic-first business management dashboard for tracking sales, inventory, debts, and daily revenue — built for shop owners who need clarity over their numbers at a glance.",
+        "challenge": "Shop owners were managing their business through scattered notebooks and manual records, with no real-time overview of their financial health, outstanding debts, or which products were actually moving.",
+        "solution": "I built a right-to-left dashboard that surfaces the most critical business metrics on the home screen — daily revenue, stock alerts, and debt summaries — backed by a structured data layer via Xano and React Query to keep everything in sync without stale reads."
       },
-      "lumen-commerce": {
-        "title": "Lumen Commerce",
-        "description": "A headless storefront for a premium goods retailer, built for speed, accessibility, and razor-sharp conversion.",
-        "challenge": "The previous storefront was slow on mobile and the checkout funnel leaked customers at every step, hurting conversion during peak campaigns.",
-        "solution": "I re-architected the storefront as a statically-optimized, edge-rendered experience with a redesigned one-page checkout, lifting mobile conversion and cutting load times by more than half."
-      },
-      "orbit-analytics": {
-        "title": "Orbit Analytics",
-        "description": "A data visualization platform that helps product teams explore user behavior through interactive, story-driven dashboards.",
-        "challenge": "Analysts were exporting to spreadsheets just to make sense of the data because the existing charts couldn't support real exploratory analysis.",
-        "solution": "I built a composable charting system with linked filtering and drill-down interactions, turning static reports into an explorable, story-driven dashboard experience."
+      "todo-app": {
+        "title": "ToDo App",
+        "description": "A minimal yet polished personal task manager built to help you organize your day, track your missions, and stay on top of what actually matters.",
+        "challenge": "As a first full-stack web project, the challenge was not just building something that works — but designing a product that feels intentional, with a smooth authentication flow and a clear, distraction-free task interface.",
+        "solution": "I crafted a clean sign-up and login flow, a task list that lets you add, complete, and remove items effortlessly, and a visual progress indicator that makes the act of getting things done feel satisfying — all without a backend, using LocalStorage for persistence."
       }
     }
   },

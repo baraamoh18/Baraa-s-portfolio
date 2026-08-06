@@ -7,42 +7,35 @@ import type { ProjectMeta } from "@/types";
  */
 export const PROJECTS: ProjectMeta[] = [
   {
-    id: "aurora-finance",
+    id: "trosc",
+    year: "2025",
+    role: "Frontend Developer",
+    tech: ["React", "TypeScript", "Tailwind CSS", "React Router"],
+    image: "trosc",
+    links: {
+      repo: "https://github.com/TROSC-Dev/TROSC-SCU.github.io",
+    },
+  },
+  {
+    id: "tijara",
+    year: "2026",
+    role: "Frontend Developer",
+    tech: ["React", "TypeScript", "Xano", "Redux", "React Query", "Recharts"],
+    image: "tijara",
+    links: {
+      live: "https://tijara-psi.vercel.app/",
+      repo: "https://github.com/baraamoh18/TIJARA",
+    },
+  },
+  {
+    id: "todo-app",
     year: "2024",
-    role: "Lead Frontend Engineer",
-    tech: ["React", "TypeScript", "WebSocket", "D3.js", "Framer Motion"],
-    image: "aurora",
+    role: "Frontend Developer",
+    tech: ["React", "TypeScript", "Tailwind CSS", "LocalStorage"],
+    image: "todo",
     links: {
-      live: "https://example.com",
-      repo: "https://github.com",
+      live: "https://to-do-app-jade-pi.vercel.app/",
+      repo: "https://github.com/baraamoh18/ToDo-App",
     },
-  },
-  {
-    id: "nimbus-console",
-    year: "2023",
-    role: "Frontend Engineer",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "GraphQL"],
-    image: "nimbus",
-    links: {
-      live: "https://example.com",
-    },
-  },
-  {
-    id: "lumen-commerce",
-    year: "2023",
-    role: "Frontend Engineer",
-    tech: ["Next.js", "Tailwind CSS", "Stripe", "Framer Motion"],
-    image: "lumen",
-    links: {
-      live: "https://example.com",
-      repo: "https://github.com",
-    },
-  },
-  {
-    id: "orbit-analytics",
-    year: "2022",
-    role: "Frontend Engineer",
-    tech: ["React", "TypeScript", "D3.js", "Redux"],
-    image: "orbit",
   },
 ];

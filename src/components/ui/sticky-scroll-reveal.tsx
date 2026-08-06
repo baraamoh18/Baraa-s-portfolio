@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, useEffect, type ReactNode } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { StickyScrollItem } from "@/types";
@@ -27,27 +27,51 @@ export const StickyScrollReveal = ({
   renderVisual,
 }: StickyScrollRevealProps) => {
   const [activeCard, setActiveCard] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    container: ref,
-    offset: ["start start", "end start"],
-  });
-  const cardLength = content.length;
+  const [bottomSpacer, setBottomSpacer] = useState(0);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const breakpoints = content.map((_, index) => index / cardLength);
-    const closest = breakpoints.reduce((closestIndex, breakpoint, index) => {
-      const distance = Math.abs(latest - breakpoint);
-      const closestDistance = Math.abs(latest - breakpoints[closestIndex]);
-      return distance < closestDistance ? index : closestIndex;
-    }, 0);
-    setActiveCard(closest);
-  });
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const containerTop = container.getBoundingClientRect().top;
+    const targetY = containerTop + 20;
+
+    let closestIndex = activeCard;
+    let minDistance = Infinity;
+
+    itemRefs.current.forEach((el, index) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const distance = Math.abs(rect.top - targetY);
+
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    if (closestIndex !== activeCard) {
+      setActiveCard(closestIndex);
+    }
+  };
+
+  // Calculate exact spacer needed to allow the last item to reach the top
+  // without scrolling too far past it.
+  useEffect(() => {
+    const lastItem = itemRefs.current[itemRefs.current.length - 1];
+    if (lastItem) {
+      // 544px is the height of h-[34rem]
+      const containerHeight = 544;
+      const lastItemHeight = lastItem.offsetHeight;
+      // targetY offset is 20px
+      const requiredPadding = Math.max(0, containerHeight - lastItemHeight - 20);
+      setBottomSpacer(requiredPadding);
+    }
+  }, [content]);
 
   return (
     <motion.div
-      ref={ref}
-      className="relative flex h-[34rem] gap-10 overflow-y-auto rounded-2xl border border-white/10 bg-surface/60 p-6 sm:p-10 no-scrollbar"
+      onScroll={handleScroll}
+      className="relative flex h-[34rem] justify-between gap-10 overflow-y-auto rounded-2xl border border-white/10 bg-surface/60 p-6 sm:p-10 no-scrollbar"
       animate={{
         backgroundImage: GLOW_POSITIONS[activeCard % GLOW_POSITIONS.length],
       }}
@@ -56,7 +80,11 @@ export const StickyScrollReveal = ({
       <div className="relative flex items-start">
         <div className="max-w-xl">
           {content.map((item, index) => (
-            <div key={item.title} className="py-10 first:pt-2">
+            <div
+              key={item.title}
+              ref={(el) => (itemRefs.current[index] = el)}
+              className="py-10 first:pt-2"
+            >
               <motion.h3
                 animate={{ opacity: activeCard === index ? 1 : 0.3 }}
                 className="text-2xl font-display font-bold text-foreground sm:text-3xl"
@@ -79,7 +107,7 @@ export const StickyScrollReveal = ({
               )}
             </div>
           ))}
-          <div className="h-16" />
+          <div style={{ height: `${bottomSpacer}px` }} />
         </div>
       </div>
 

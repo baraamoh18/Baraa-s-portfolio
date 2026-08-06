@@ -81,7 +81,7 @@ export const TextRevealCard = ({
               : { clipPath: `inset(0 ${100 - widthPercentage}% 0 0)` }
           }
           transition={isMouseOver ? { duration: 0 } : { duration: 0.4 }}
-          className="absolute z-20 will-change-transform"
+          className="absolute inset-0 z-20 flex items-center bg-[#0d0d0f] will-change-transform"
         >
           <p className="bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-sm font-medium leading-relaxed text-transparent sm:text-base">
             {revealText}
