@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Preloader } from "@/components/layout/preloader";
@@ -39,6 +40,7 @@ function App() {
             <ContactSection />
           </main>
           <Footer />
+          <Analytics />
         </motion.div>
       )}
     </AnimatePresence>
