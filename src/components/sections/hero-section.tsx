@@ -110,7 +110,7 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <GlowingAvatar
-            src="/images/headshot.jpeg"
+            src="/images/headshot.webp"
             alt={t("hero.greeting")}
             href="https://www.linkedin.com/in/albaraa-mohamed-830498284/"
             className="h-[26rem] sm:h-[32rem]"

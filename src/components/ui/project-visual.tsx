@@ -39,7 +39,7 @@ export const ProjectVisual = ({ id, title, className }: ProjectVisualProps) => {
       <div className={cn("relative flex-1 overflow-hidden bg-gradient-to-br", gradient)}>
         {!imageError ? (
           <motion.img
-            src={`/images/projects/${id}.png`}
+            src={`/images/projects/${id}.webp`}
             alt={title}
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}

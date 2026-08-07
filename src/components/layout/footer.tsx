@@ -43,8 +43,8 @@ export const Footer = () => {
             <a
               key={key}
               href={href}
-              target={key === "email" ? undefined : "_blank"}
-              rel={key === "email" ? undefined : "noreferrer"}
+              target="_blank"
+              rel="noreferrer"
               aria-label={key}
               className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-muted-foreground transition-colors hover:border-white/30 hover:text-foreground"
             >
