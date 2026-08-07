@@ -2,6 +2,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useEffect,
   type MouseEvent as ReactMouseEvent,
   type ReactNode,
   type TouchEvent as ReactTouchEvent,
@@ -30,6 +31,13 @@ export const TextRevealCard = ({
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [widthPercentage, setWidthPercentage] = useState(0);
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isRtl, setIsRtl] = useState(false);
+
+  useEffect(() => {
+    if (cardRef.current) {
+      setIsRtl(window.getComputedStyle(cardRef.current).direction === "rtl");
+    }
+  }, []);
 
   const updateFromClientX = (clientX: number) => {
     if (!cardRef.current) return;
@@ -55,7 +63,6 @@ export const TextRevealCard = ({
 
   return (
     <div
-      ref={cardRef}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       onMouseMove={onMouseMove}
@@ -69,19 +76,25 @@ export const TextRevealCard = ({
     >
       {children}
 
-      <div className="relative mt-4 flex min-h-[7rem] items-center overflow-hidden">
+      <div ref={cardRef} className="relative mt-4 grid items-center overflow-hidden">
         <motion.div
           style={{ width: "100%" }}
           animate={
             isMouseOver
               ? {
                   opacity: widthPercentage > 0 ? 1 : 0,
-                  clipPath: `inset(0 ${100 - widthPercentage}% 0 0)`,
+                  clipPath: isRtl
+                    ? `inset(0 0 0 ${widthPercentage}%)`
+                    : `inset(0 ${100 - widthPercentage}% 0 0)`,
                 }
-              : { clipPath: `inset(0 ${100 - widthPercentage}% 0 0)` }
+              : { 
+                  clipPath: isRtl
+                    ? `inset(0 0 0 ${widthPercentage}%)`
+                    : `inset(0 ${100 - widthPercentage}% 0 0)`
+                }
           }
           transition={isMouseOver ? { duration: 0 } : { duration: 0.4 }}
-          className="absolute inset-0 z-20 flex items-center bg-[#0d0d0f] will-change-transform"
+          className="col-start-1 row-start-1 z-20 flex h-full w-full items-center bg-[#0d0d0f] will-change-transform"
         >
           <p className="bg-gradient-to-b from-white to-neutral-400 bg-clip-text text-sm font-medium leading-relaxed text-transparent sm:text-base">
             {revealText}
@@ -98,7 +111,7 @@ export const TextRevealCard = ({
           className="absolute z-50 h-full w-[2px] bg-gradient-to-b from-transparent via-white/70 to-transparent will-change-transform"
         />
 
-        <div className="h-full w-full overflow-hidden">
+        <div className="col-start-1 row-start-1 flex h-full w-full items-center overflow-hidden">
           <p className="text-sm font-medium leading-relaxed text-neutral-500 sm:text-base">
             {text}
           </p>
