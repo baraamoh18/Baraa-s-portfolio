@@ -14,11 +14,6 @@ export interface LanguageOption {
   dir: Direction;
 }
 
-export interface NavLink {
-  key: string;
-  href: string;
-}
-
 /** A single technology entry rendered inside a Skills bento card. */
 export interface TechIcon {
   name: string;
@@ -69,8 +64,4 @@ export interface ContactFormValues {
   name: string;
   email: string;
   message: string;
-}
-
-export interface SectionProps {
-  className?: string;
 }

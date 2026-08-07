@@ -11,7 +11,6 @@ export const LOGO_TRANSFORM = "translate(0.000000,335.000000) scale(0.100000,-0.
  * Same coordinate system as the wordmark but only contains the A glyph.
  * Used in the navbar where space is tight and the full wordmark is too wide.
  */
-export const LOGOMARK_VIEWBOX = "0 0 600.000000 335.000000";
 export const LOGOMARK_TRANSFORM = "translate(0.000000,335.000000) scale(0.100000,-0.100000)";
 export const LOGOMARK_PATHS: string[] = [
   `M2874 2190 c-18 -7 -77 -124 -166 -330 -10 -25 -32 -72 -49 -106 -16

@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { ArrowUp, Github, Linkedin, Mail } from "lucide-react";
-import { Logo } from "@/components/ui/logo";
 import { SITE_CONFIG } from "@/data/site";
 
 const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
