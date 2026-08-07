@@ -1,10 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { GlowingAvatar } from "@/components/ui/glowing-avatar";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { AmbientBackground } from "@/components/ui/ambient-background";
+import { cn } from "@/lib/utils";
 
 interface StatProps {
   value: string;
@@ -78,9 +79,17 @@ export const HeroSection = () => {
               {t("hero.ctaPrimary")}
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />
             </Button>
-            <Button size="lg" variant="outline" onClick={() => scrollTo("#contact")}>
-              {t("hero.ctaSecondary")}
-            </Button>
+            <motion.a
+              href="/Albaraa-Mohamed-June2026.pdf"
+              download="Baraa_CV.pdf"
+              className={cn(buttonVariants({ size: "lg", variant: "outline" }), "gap-2")}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            >
+              <Download className="h-4 w-4" />
+              {t("hero.resume")}
+            </motion.a>
           </motion.div>
 
           <motion.div
@@ -89,9 +98,9 @@ export const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-4 grid grid-cols-3 gap-8 border-t border-white/10 pt-6"
           >
-            <Stat value="5+" label={t("hero.stats.experience")} />
-            <Stat value="40+" label={t("hero.stats.projects")} />
-            <Stat value="98%" label={t("hero.stats.satisfaction")} />
+            <Stat value="React & TS" label="Core Architecture" />
+            <Stat value="Tailwind" label="Pixel-Perfect UI" />
+            <Stat value="Framer" label="Fluid Motion Design" />
           </motion.div>
         </div>
 

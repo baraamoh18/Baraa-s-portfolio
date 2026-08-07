@@ -37,7 +37,7 @@ export const Footer = () => {
   return (
     <footer className="relative border-t border-white/10 bg-background">
       <div className="container flex flex-col items-center gap-8 py-12 sm:flex-row sm:justify-between">
-        <Logo className="h-6 w-auto text-foreground/80" />
+        <img src="/images/footer-logo.png" alt="Baraa Logo" className="h-20 w-auto opacity-100 transition-transform hover:scale-105" />
 
         <div className="flex items-center gap-3">
           {SOCIAL_LINKS.map(({ key, href, icon: Icon }) => (

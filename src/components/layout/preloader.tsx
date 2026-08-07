@@ -1,82 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
-import { LogoHoverEffect } from "@/components/ui/logo-hover-effect";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import type { DotLottie } from "@lottiefiles/dotlottie-react";
 
 export interface PreloaderProps {
   onComplete: () => void;
 }
 
-const EASE_EXPO = [0.76, 0, 0.24, 1] as const;
+const EASE_EXPO: [number, number, number, number] = [0.76, 0, 0.24, 1];
 
+/**
+ * Lottie-powered preloader — plays a custom brand animation from a .json
+ * file once, then fades out the wrapper to reveal the main site.
+ *
+ * The animation plays exactly once (no loop). When it finishes, the
+ * wrapper fades out over 0.8s and fires `onComplete` to unmount.
+ */
 export const Preloader = ({ onComplete }: PreloaderProps) => {
-  const { t } = useTranslation();
-  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState<"playing" | "fadeout">("playing");
 
-  useEffect(() => {
-    const start = performance.now();
-    const durationMs = 2200;
-    let frame = 0;
+  // Grab the DotLottie instance so we can listen for the "complete" event
+  const dotLottieRefCallback = useCallback((dotLottie: DotLottie | null) => {
+    if (!dotLottie) return;
 
-    const tick = (now: number) => {
-      const elapsed = now - start;
-      const next = Math.min(100, Math.round((elapsed / durationMs) * 100));
-      setProgress(next);
-      if (elapsed < durationMs) {
-        frame = requestAnimationFrame(tick);
-      } else {
-        window.setTimeout(onComplete, 450);
-      }
+    const handleComplete = () => {
+      setPhase("fadeout");
     };
 
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [onComplete]);
+    dotLottie.addEventListener("complete", handleComplete);
+
+    return () => {
+      dotLottie.removeEventListener("complete", handleComplete);
+    };
+  }, []);
+
+  // Fire onComplete after the fade-out transition finishes
+  useEffect(() => {
+    if (phase !== "fadeout") return;
+    const timeout = setTimeout(onComplete, 800);
+    return () => clearTimeout(timeout);
+  }, [phase, onComplete]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[999] bg-background"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: EASE_EXPO }}
+      className="fixed inset-0 z-[999] flex items-center justify-center bg-background"
+      initial={{ opacity: 1 }}
+      animate={phase === "fadeout" ? { opacity: 0 } : { opacity: 1 }}
+      transition={{ duration: 0.8, ease: EASE_EXPO }}
+      style={{ pointerEvents: phase === "fadeout" ? "none" : "auto" }}
     >
-      <motion.div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-1/2 bg-background"
-        exit={{ y: "-100%" }}
-        transition={{ duration: 0.7, ease: EASE_EXPO }}
-      />
-      <motion.div
-        aria-hidden
-        className="absolute inset-x-0 bottom-0 h-1/2 bg-background"
-        exit={{ y: "100%" }}
-        transition={{ duration: 0.7, ease: EASE_EXPO }}
-      />
-
-      <motion.div
-        exit={{ opacity: 0, scale: 0.94 }}
-        transition={{ duration: 0.35, ease: EASE_EXPO }}
-        className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-6 px-6"
-      >
-        <div className="aspect-[600/335] w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
-          <LogoHoverEffect className="h-full w-full" automatic />
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-xs font-medium uppercase tracking-[0.35em] text-muted-foreground"
-        >
-          {t("preloader.tagline")}
-        </motion.p>
-
-        <div className="mt-4 h-px w-48 overflow-hidden bg-white/10">
-          <div className="h-full bg-white/70" style={{ width: `${progress}%` }} />
-        </div>
-        <span className="font-mono text-[11px] tabular-nums text-muted-foreground/70">
-          {progress}%
-        </span>
-      </motion.div>
+      <div className="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[440px] md:h-[440px]">
+        <DotLottieReact
+          src="/loading-animation.json"
+          autoplay
+          loop={false}
+          speed={1}
+          dotLottieRefCallback={dotLottieRefCallback}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
     </motion.div>
   );
 };

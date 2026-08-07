@@ -39,11 +39,26 @@ export const ContactSection = () => {
     setStatus("submitting");
 
     try {
-      // NOTE: no backend is wired up yet. Swap this simulated delay for a
-      // real request (e.g. to Formspree, EmailJS, or your own API route).
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-      setStatus("success");
-      setValues(INITIAL_VALUES);
+      const formData = new FormData();
+      formData.append("access_key", "a08c2841-cc51-4817-89ee-80257c9b477f");
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("message", values.message);
+      formData.append("subject", `Portfolio contact from ${values.name}`);
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setStatus("success");
+        setValues(INITIAL_VALUES);
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
