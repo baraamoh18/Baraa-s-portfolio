@@ -80,7 +80,7 @@ export const HeroSection = () => {
               <ArrowRight className="h-4 w-4 rtl:rotate-180" />
             </Button>
             <motion.a
-              href="/Albaraa-Mohamed-June2026.pdf"
+              href="/Albaraa_resume.pdf"
               download="Baraa_CV.pdf"
               className={cn(buttonVariants({ size: "lg", variant: "outline" }), "gap-2")}
               whileHover={{ scale: 1.03 }}
