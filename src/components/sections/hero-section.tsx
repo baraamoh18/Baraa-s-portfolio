@@ -36,18 +36,6 @@ export const HeroSection = () => {
 
       <div className="container relative grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
         <div className="flex flex-col items-center gap-6 text-center lg:items-start lg:text-start">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-medium text-muted-foreground"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/50" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-white/80" />
-            </span>
-            {t("hero.badge")}
-          </motion.span>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
